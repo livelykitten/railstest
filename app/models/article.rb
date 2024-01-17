@@ -1,10 +1,8 @@
 class Article < ApplicationRecord
-    def change
-        create_table :articles do |t|
-            t.string :title
-            t.text :body
+    include Visible
 
-            t.timestamps
-        end
-    end
+    has_many :comments, dependent: :destroy
+
+    validates :title, presence: true
+    validates :body, presence: true, length: { minimum: 10 }
 end
